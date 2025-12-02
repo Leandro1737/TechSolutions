@@ -149,9 +149,9 @@ Para configurar o servidor NFS, foi necessário fazer a instalação do pacote n
 
 sudo apt install nfs-kernel-server -y -- instalação do servidor NFS
 
- sudo mkdir -p /srv/nfs -- criar pasta que será compartilhada
+ sudo mkdir -p /mnt/nfs -- criar pasta que será compartilhada
  
- sudo chmod 777 /srv/nfs -- ajustar permissões
+ sudo chmod 777 /mnt/nfs -- ajustar permissões
  
  sudo nano /etc/exports -- configurar o arquivos de exports
  
