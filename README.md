@@ -118,65 +118,58 @@ Para listar e verificar os arquivos disponíveis, utiliza-se o comando:
 
 ## códigos e testes usados no FTP:
 
- sudo apt install vsftpd -y
+ sudo apt install vsftpd -y -- instalação
  
-sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
+sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.bak --fazer backup arquivo de configuração
 
-sudo nano /etc/vsftpd.conf
+sudo nano /etc/vsftpd.conf -- editar a configuração do FTP
 
-allow_writeable_chroot=YES
+allow_writeable_chroot=YES -- libera o acesso das permissões dentro do conf para não haver restrição na hora da configuração.
 
- sudo systemctl restart vsftpd
+ sudo systemctl restart vsftpd -- reseta o serviço FTP
  
-sudo systemctl status vsftpd
+sudo systemctl status vsftpd -- verificar o status FTP
 
-sudo adduser ftpuser
+sudo adduser ftpuser -- adicionar usuário FTP
 
- sudo chmod -R 755 /home/ftpuser
+ sudo chmod -R 755 /home/ftpuser -- dar permissão a pasta do usuário
  
-sudo mkdir /home/ftpuser/ftp
+sudo mkdir /home/ftpuser/ftp -- criar pasta expecifica para usuário
 
-sudo chmod 755 /home/ftpuser/ftp
+sudo chmod 755 /home/ftpuser/ftp -- conceder permissão 
 
- ftp 172.16.0.35
+ ftp 172.16.0.35 -- acessa a página de teste
  
- ftp://172.16.0.35
- 
- ftp://ftpuser@172.16.0.42
+ ftp://ftpuser@172.16.0.42 -- forçar para acessar na web
 
 # NFS
 Para configurar o servidor NFS, foi necessário fazer a instalação do pacote nfs-kernel-server na máquina Servidor, configurando-o corretamente e aplicando as configurações. Na máquina cliente, é necessário baixar o pacote nfs-common para utilizar o serviço do NFS e após, montar o diretério compartilhado em um diretório local. 
 
 ## códigos e testes usados no NFS:
 
- sudo mkdir -p /srv/nfs
- 
- sudo chmod 777 /srv/nfs
- 
- sudo nano /etc/exports
- 
- /srv/nfs 172.16.0.0/24(rw,sync,no_subtree_check)
- 
- sudo exportfs -ra
- 
- sudo systemctl restart nfs-kernel-server
- 
- sudo exportfs -v
- 
- sudo dhclient -v enp0s3
- 
- DHCPREQUEST on enp0s3 to 172.16.0.35 
- 
-DHCPOFFER from 172.16.0.35
+sudo apt install nfs-kernel-server -y -- instalação do servidor NFS
 
-DHCPACK from 172.16.0.35
+ sudo mkdir -p /srv/nfs -- criar pasta que será compartilhada
+ 
+ sudo chmod 777 /srv/nfs -- ajustar permissões
+ 
+ sudo nano /etc/exports -- configurar o arquivos de exports
+ 
+ /srv/nfs 172.16.0.0/24(rw,sync,no_subtree_check) -- configurara o arquivo de exports
+ 
+ sudo exportfs -ra -- aplicar as configurações
+ 
+ sudo systemctl restart nfs-kernel-server -- reiniciar o serviço NFS
+ 
+ sudo exportfs -v -- lista todas as pastas exportadas
+ 
 
- sudo mkdir -p /mnt/nfs
+ sudo mkdir -p /mnt/nfs --criar ponto de montagem
  
- sudo mount 172.16.0.40:/srv/nfs /mnt/nfs
+ sudo mount 172.16.0.40:/srv/nfs /mnt/nfs -- montar compartilhamento
  
- ls /mnt/nfs
+ ls /mnt/nfs -- teste
  
- sudo touch /mnt/nfs/arquivo_teste.txt
+ sudo touch /mnt/nfs/arquivo_teste.txt -- teste
 
 
